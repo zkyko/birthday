@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#1a0a2e" />
+  <title>Happy 25th Birthday ✨</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-tap-highlight-color: transparent; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: "Georgia", "Times New Roman", serif;
+      overflow-x: hidden;
+      background: radial-gradient(ellipse 120% 80% at 50% 100%, #2d1b4e 0%, #1a0a2e 45%, #0d0518 100%);
+      color: #fff8f0;
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8) 50%, transparent 50%),
+        radial-gradient(1px 1px at 30% 70%, rgba(255,228,196,0.6) 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 70% 30%, rgba(255,255,255,0.5) 50%, transparent 50%),
+        radial-gradient(1px 1px at 90% 60%, rgba(200,230,255,0.5) 50%, transparent 50%),
+        radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.4) 50%, transparent 50%);
+      background-size: 100% 100%;
+      animation: twinkle 4s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: 0.65; }
+      to { opacity: 1; }
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(1rem, 5vw, 2rem);
+      padding-bottom: max(2rem, env(safe-area-inset-bottom));
+    }
+
+    .top-badge {
+      margin-bottom: 1.25rem;
+      width: clamp(72px, 18vw, 92px);
+      height: clamp(72px, 18vw, 92px);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-family: Georgia, serif;
+      font-size: clamp(1.65rem, 7vw, 2.15rem);
+      font-weight: 400;
+      color: #1a0a2e;
+      background: radial-gradient(circle at 35% 30%, #fff9e6 0%, #ffd98a 38%, #e6a800 100%);
+      box-shadow:
+        0 0 0 3px rgba(255,215,140,0.5),
+        0 12px 40px rgba(0,0,0,0.35),
+        inset 0 2px 12px rgba(255,255,255,0.65);
+      animation: badge-glow 2.8s ease-in-out infinite;
+    }
+    @keyframes badge-glow {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(255,215,140,0.45), 0 12px 40px rgba(0,0,0,0.35), inset 0 2px 12px rgba(255,255,255,0.65); transform: scale(1); }
+      50% { box-shadow: 0 0 0 6px rgba(255,215,140,0.35), 0 16px 48px rgba(0,0,0,0.4), inset 0 2px 12px rgba(255,255,255,0.75); transform: scale(1.03); }
+    }
+
+    .hint {
+      font-size: clamp(0.85rem, 3vw, 1rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.88;
+      margin-bottom: 2rem;
+      max-width: 20rem;
+      line-height: 1.55;
+      animation: pulse-soft 2s ease-in-out infinite;
+    }
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 0.75; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(-2px); }
+    }
+
+    .gift-zone {
+      position: relative;
+      cursor: pointer;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
+      perspective: 800px;
+    }
+    .gift-zone:focus-visible {
+      outline: 3px solid #ffd700;
+      outline-offset: 8px;
+      border-radius: 12px;
+    }
+
+    .gift {
+      width: min(220px, 52vw);
+      height: min(220px, 52vw);
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      --kick: 8px;
+      --twist: 12deg;
+    }
+
+    .gift-zone[data-cracks="0"]:hover .gift:not(.opened):not(.tap-pop),
+    .gift-zone[data-cracks="1"]:hover .gift:not(.opened):not(.tap-pop),
+    .gift-zone[data-cracks="0"]:active .gift:not(.opened):not(.tap-pop),
+    .gift-zone[data-cracks="1"]:active .gift:not(.opened):not(.tap-pop) {
+      transform: scale(1.03);
+    }
+
+    /* Each hammer tap — harder kicks as cracks deepen */
+    .gift.tap-pop:not(.opened) {
+      animation: tap-pop var(--tap-pop-dur, 0.11s) cubic-bezier(0.36, 0.85, 0.44, 1) both !important;
+    }
+    @keyframes tap-pop {
+      0%, 100% { transform: translate(0, 0) rotate(0); }
+      35% {
+        transform: translate(calc(var(--kick) * -1), calc(var(--kick) * 0.35))
+          rotate(calc(var(--twist) * -1));
+      }
+      70% {
+        transform: translate(var(--kick), calc(var(--kick) * -0.25))
+          rotate(var(--twist));
+      }
+    }
+
+    .gift-zone[data-cracks="3"] .gift:not(.opened):not(.tap-pop) {
+      animation: box-frantic 0.42s ease-in-out infinite;
+    }
+    @keyframes box-frantic {
+      0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+      25% { transform: translate(-3px, 2px) rotate(-4deg) scale(1.02); }
+      75% { transform: translate(3px, -2px) rotate(4deg) scale(1.02); }
+    }
+
+    .gift-zone[data-cracks="2"] .ribbon-v,
+    .gift-zone[data-cracks="3"] .ribbon-v {
+      transform: translateX(-50%) rotate(-5deg) scaleX(1.06);
+      transition: transform 0.35s ease;
+    }
+    .gift-zone[data-cracks="2"] .ribbon-h,
+    .gift-zone[data-cracks="3"] .ribbon-h {
+      transform: translateY(-50%) rotate(4deg) scaleY(1.1);
+      transition: transform 0.35s ease;
+    }
+
+    .gift-cracks {
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      pointer-events: none;
+      z-index: 6;
+      overflow: hidden;
+    }
+    .gift-cracks .crack {
+      position: absolute;
+      width: 3px;
+      border-radius: 2px;
+      background: rgba(35, 18, 45, 0.55);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.35),
+        inset 0 0 8px rgba(255, 255, 255, 0.25);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .c1 {
+      height: 62%;
+      left: 28%;
+      top: 18%;
+      transform: rotate(22deg);
+    }
+    .c2 {
+      height: 58%;
+      left: 62%;
+      top: 22%;
+      transform: rotate(-35deg);
+    }
+    .c3 {
+      height: 42%;
+      left: 46%;
+      top: 48%;
+      transform: rotate(72deg);
+    }
+    .c4 {
+      height: 52%;
+      left: 38%;
+      top: 12%;
+      transform: rotate(-12deg);
+    }
+    .c5 {
+      height: 48%;
+      left: 72%;
+      top: 38%;
+      transform: rotate(48deg);
+    }
+    .gift-zone[data-cracks="1"] .c1,
+    .gift-zone[data-cracks="1"] .c2 {
+      opacity: 0.88;
+    }
+    .gift-zone[data-cracks="2"] .c1,
+    .gift-zone[data-cracks="2"] .c2,
+    .gift-zone[data-cracks="2"] .c3,
+    .gift-zone[data-cracks="2"] .c4 {
+      opacity: 0.92;
+    }
+    .gift-zone[data-cracks="3"] .crack {
+      opacity: 1;
+      width: 4px;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.45),
+        0 0 14px rgba(255, 215, 140, 0.35),
+        inset 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .anticipation-meta {
+      width: min(18rem, 88vw);
+      margin-bottom: 1.75rem;
+      transition: opacity 0.35s ease;
+    }
+    .anticipation-track {
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.25);
+    }
+    .anticipation-fill {
+      display: block;
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ffd98a, #ff8fb8, #87ceeb);
+      box-shadow: 0 0 16px rgba(255,215,140,0.45);
+      transition: width 0.07s linear, box-shadow 0.15s ease;
+    }
+    .anticipation-fill.is-danger {
+      box-shadow: 0 0 20px rgba(255, 120, 160, 0.65);
+      background: linear-gradient(90deg, #ffb88a, #ff6b9d, #dda0dd);
+    }
+    .anticipation-fill.is-hot {
+      box-shadow: 0 0 22px rgba(255, 236, 140, 0.85);
+    }
+    .anticipation-step {
+      margin: 0.65rem 0 0;
+      font-size: clamp(0.78rem, 2.9vw, 0.92rem);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: center;
+      color: rgba(255,236,214,0.75);
+    }
+    .anticipation-step strong {
+      color: #ffe8c4;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    .box {
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: linear-gradient(145deg, #e84d6f 0%, #c2365c 40%, #9b2148 100%);
+      box-shadow:
+        0 20px 50px rgba(0,0,0,0.45),
+        inset 0 -8px 24px rgba(0,0,0,0.25),
+        inset 0 4px 16px rgba(255,255,255,0.15);
+      transform: translateZ(0);
+      overflow: visible;
+    }
+    .ribbon-v {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 28%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, #ffd700 0%, #fff4b8 45%, #ffd700 100%);
+      border-radius: 4px;
+      box-shadow: inset 0 0 12px rgba(255,255,255,0.4);
+    }
+    .ribbon-h {
+      position: absolute;
+      top: 42%;
+      left: 0;
+      right: 0;
+      height: 22%;
+      transform: translateY(-50%);
+      background: linear-gradient(180deg, #ffd700 0%, #fff4b8 50%, #ffd700 100%);
+      border-radius: 4px;
+      box-shadow: inset 0 0 12px rgba(255,255,255,0.35);
+    }
+    .bow {
+      position: absolute;
+      left: 50%;
+      top: -18%;
+      transform: translateX(-50%);
+      width: min(120px, 35vw);
+      height: min(90px, 26vw);
+      z-index: 2;
+    }
+    .bow::before,
+    .bow::after {
+      content: "";
+      position: absolute;
+      width: 48%;
+      height: 85%;
+      top: 10%;
+      border-radius: 50% 50% 45% 45%;
+      background: radial-gradient(circle at 40% 40%, #ffe566, #e6a800);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    }
+    .bow::before { left: 0; transform: rotate(-25deg); }
+    .bow::after { right: 0; transform: rotate(25deg); }
+    .bow-center {
+      position: absolute;
+      left: 50%;
+      top: 55%;
+      transform: translate(-50%, -50%);
+      width: 28%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #ffd700, #c99700);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+      z-index: 3;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 12px 4px rgba(255,220,180,0.9);
+      animation: sparkle-move 3s ease-in-out infinite;
+      opacity: 0;
+    }
+    .sparkle:nth-child(1) { left: -12%; top: 20%; animation-delay: 0s; }
+    .sparkle:nth-child(2) { right: -15%; top: 55%; animation-delay: 0.6s; }
+    .sparkle:nth-child(3) { left: 10%; bottom: -8%; animation-delay: 1.2s; }
+    @keyframes sparkle-move {
+      0%, 100% { opacity: 0; transform: scale(0.4); }
+      40%, 60% { opacity: 1; transform: scale(1); }
+    }
+
+    .gift.opened {
+      animation: none !important;
+    }
+    .gift.opened .box,
+    .gift.opened .ribbon-v,
+    .gift.opened .ribbon-h,
+    .gift.opened .bow,
+    .gift.opened .bow-center,
+    .gift.opened .gift-cracks {
+      animation: unwrap 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    @keyframes unwrap {
+      to {
+        opacity: 0;
+        transform: scale(1.15) translateY(-40px);
+        filter: blur(8px);
+      }
+    }
+
+    .reveal {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0.85);
+      width: min(94vw, 460px);
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease 0.35s, transform 0.7s cubic-bezier(0.34, 1.4, 0.64, 1) 0.35s;
+    }
+    .gift-zone.revealed .reveal {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .reveal-card {
+      background: linear-gradient(155deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.05) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 24px;
+      padding: clamp(1.5rem, 5vw, 2.25rem);
+      box-shadow:
+        0 24px 60px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+
+    .reveal-inner > * {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    .gift-zone.revealed .reveal-inner > * {
+      animation: line-in 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .gift-zone.revealed .reveal-inner > *:nth-child(1) { animation-delay: 0.42s; }
+    .gift-zone.revealed .reveal-inner > *:nth-child(2) { animation-delay: 0.72s; }
+    .gift-zone.revealed .reveal-inner > *:nth-child(3) { animation-delay: 1s; }
+    .gift-zone.revealed .reveal-inner > *:nth-child(4) { animation-delay: 1.28s; }
+    .gift-zone.revealed .reveal-inner > *:nth-child(5) { animation-delay: 1.58s; }
+    .gift-zone.revealed .reveal-inner > *:nth-child(6) { animation-delay: 1.88s; }
+    .gift-zone.revealed .reveal-inner > *:nth-child(7) { animation-delay: 2.18s; }
+    @keyframes line-in {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal-open {
+      font-size: clamp(1.35rem, 5.5vw, 1.85rem);
+      font-weight: 400;
+      margin: 0 0 0.65rem;
+      background: linear-gradient(105deg, #fff8f0, #ffd98a, #ffb8d9);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1.25;
+    }
+    .reveal-tease {
+      font-size: clamp(0.98rem, 3.6vw, 1.08rem);
+      color: rgba(255,236,220,0.82);
+      font-style: italic;
+      margin: 0 0 1rem;
+      line-height: 1.45;
+    }
+
+    .reveal-label {
+      font-size: clamp(0.72rem, 2.8vw, 0.82rem);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,228,196,0.88);
+      margin: 0 0 0.5rem;
+    }
+    .reveal h1 {
+      margin: 0 0 0.65rem;
+      font-size: clamp(1.75rem, 6.5vw, 2.35rem);
+      font-weight: 400;
+      line-height: 1.2;
+      background: linear-gradient(90deg, #fff8e7, #ffd98a, #87ceeb, #e0f4ff);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shine 4s linear infinite;
+    }
+    @keyframes shine {
+      to { background-position: 200% center; }
+    }
+    .reveal-sub {
+      font-size: clamp(1rem, 3.8vw, 1.15rem);
+      color: rgba(255,248,232,0.88);
+      line-height: 1.5;
+      margin: 0;
+    }
+    .wyoming-icon {
+      font-size: clamp(2.35rem, 9vw, 3.25rem);
+      margin-top: 0.35rem;
+      margin-bottom: 0.25rem;
+      line-height: 1;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+    }
+
+    .signature {
+      margin: 0.85rem 0 0;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.18);
+      font-size: clamp(0.92rem, 3.4vw, 1rem);
+      line-height: 1.65;
+      color: rgba(255,245,228,0.78);
+    }
+    .signature .sig-prefix {
+      font-style: italic;
+      letter-spacing: 0.02em;
+    }
+    .signature .sig-by {
+      display: inline-block;
+      margin-top: 0.35rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      letter-spacing: 0.28em;
+      text-transform: lowercase;
+      font-size: clamp(0.98rem, 3.6vw, 1.12rem);
+      background: linear-gradient(90deg, #ffe8f4, #ffd98a, #fff8e7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .wrap:has(.gift-zone.revealed) .anticipation-meta {
+      opacity: 0;
+      height: 0;
+      margin: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .wrap:has(.gift-zone.revealed) .hint {
+      opacity: 0;
+      height: 0;
+      margin: 0;
+      overflow: hidden;
+      transition: opacity 0.3s;
+    }
+    .wrap:has(.gift-zone.revealed) .top-badge {
+      opacity: 0;
+      height: 0;
+      width: 0;
+      margin: 0;
+      overflow: hidden;
+      transition: opacity 0.35s ease;
+      animation: none;
+      pointer-events: none;
+    }
+    .gift-zone.revealed .sparkle { display: none; }
+    .gift-zone.revealed {
+      pointer-events: none;
+    }
+    .gift-zone.revealed .reveal {
+      pointer-events: auto;
+    }
+
+    canvas#confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .stars, .hint, .sparkle { animation: none; }
+      .top-badge { animation: none; }
+      .reveal h1 { animation: none; background-position: 0 center; }
+      .gift-zone[data-cracks="0"]:hover .gift:not(.opened),
+      .gift-zone[data-cracks="1"]:hover .gift:not(.opened),
+      .gift-zone[data-cracks="0"]:active .gift:not(.opened),
+      .gift-zone[data-cracks="1"]:active .gift:not(.opened) { transform: none; }
+      .gift.tap-pop:not(.opened),
+      .gift-zone[data-cracks="3"] .gift:not(.opened) {
+        animation: none !important;
+      }
+      .gift-zone[data-cracks="2"] .ribbon-v,
+      .gift-zone[data-cracks="3"] .ribbon-v { transform: translateX(-50%); }
+      .gift-zone[data-cracks="2"] .ribbon-h,
+      .gift-zone[data-cracks="3"] .ribbon-h { transform: translateY(-50%); }
+      .gift-zone.revealed .reveal-inner > * {
+        opacity: 1;
+        transform: none;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <main class="wrap">
+    <div class="top-badge" aria-hidden="true">25</div>
+    <p class="hint" id="hint" aria-live="polite">Your 25th — don’t gently unwrap this one. Hammer it fast and steady… if you slow down, it fights back.</p>
+
+    <div class="anticipation-meta" id="anticipationMeta">
+      <div class="anticipation-track" aria-hidden="true"><span class="anticipation-fill" id="anticipationFill"></span></div>
+      <p class="anticipation-step" id="anticipationStep" aria-live="polite"><strong>0%</strong> smashed · rapid taps crack harder</p>
+    </div>
+
+    <div class="gift-zone" id="giftZone" role="button" tabindex="0" data-cracks="0" aria-describedby="hint anticipationStep" aria-label="Break open birthday gift — tap repeatedly and quickly">
+      <div class="gift" id="gift" aria-hidden="true">
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <div class="bow"><span class="bow-center"></span></div>
+        <div class="box">
+          <div class="ribbon-v"></div>
+          <div class="ribbon-h"></div>
+          <div class="gift-cracks" aria-hidden="true">
+            <span class="crack c1"></span>
+            <span class="crack c2"></span>
+            <span class="crack c3"></span>
+            <span class="crack c4"></span>
+            <span class="crack c5"></span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" id="revealBlock" aria-live="polite">
+        <div class="reveal-card">
+          <div class="reveal-inner">
+            <p class="reveal-open">Happy 25th Birthday.</p>
+            <p class="reveal-tease">You’ve lit up every room you walk into — so this had to be bigger than balloons.</p>
+            <p class="reveal-label">The reveal</p>
+            <h1>You’re going to Wyoming.</h1>
+            <p class="reveal-sub">Open skies, endless ridges, and a trip built around you — because quarter-century milestones deserve horizon lines, not small print.</p>
+            <div class="wyoming-icon" aria-hidden="true">🏔️✨🎂</div>
+            <p class="signature"><span class="sig-prefix">With love,</span><br><span class="sig-by">by aastha</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var zone = document.getElementById("giftZone");
+      var gift = document.getElementById("gift");
+      var hintEl = document.getElementById("hint");
+      var fillEl = document.getElementById("anticipationFill");
+      var stepEl = document.getElementById("anticipationStep");
+
+      var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      var TAP_BASE = reducedMotion ? 12 : 3.5;
+      var COMBO_MS = reducedMotion ? 600 : 340;
+      var COMBO_MAX = reducedMotion ? 5 : 9;
+      var DECAY_DELAY_MS = reducedMotion ? 520 : 165;
+      var DECAY_PER_SEC = reducedMotion ? 14 : 38;
+
+      var DEFAULT_HINT =
+        "Your 25th — don’t gently unwrap this one. Hammer it fast and steady… if you slow down, it fights back.";
+
+      var progress = 0;
+      var prevProgress = 0;
+      var lastTapTime = performance.now();
+      var lastLoopTime = performance.now();
+      var comboStreak = 0;
+      var revealed = false;
+      var popTimer = null;
+
+      var crossed = { m30: false, m58: false, m88: false };
+      var lastHintText = "";
+
+      function syncCrossedFlags() {
+        if (progress < 26) crossed.m30 = false;
+        if (progress < 52) crossed.m58 = false;
+        if (progress < 82) crossed.m88 = false;
+      }
+
+      function crackTier() {
+        return progress >= 82 ? "3" : progress >= 52 ? "2" : progress >= 26 ? "1" : "0";
+      }
+
+      function tapPopKick() {
+        var tier = zone.dataset.cracks;
+        gift.style.setProperty("--kick", tier === "3" ? "15px" : tier === "2" ? "11px" : "8px");
+        gift.style.setProperty("--twist", tier === "3" ? "20deg" : tier === "2" ? "15deg" : "11deg");
+        gift.style.setProperty("--tap-pop-dur", tier === "3" ? "0.085s" : "0.105s");
+        gift.classList.remove("tap-pop");
+        void gift.offsetWidth;
+        gift.classList.add("tap-pop");
+        window.clearTimeout(popTimer);
+        popTimer = window.setTimeout(function () {
+          gift.classList.remove("tap-pop");
+        }, 160);
+      }
+
+      function buzz(strength) {
+        try {
+          if (strength === "big") navigator.vibrate([40, 55, 45, 65]);
+          else navigator.vibrate(Math.min(28, 10 + comboStreak));
+        } catch (e) {}
+      }
+
+      function burstConfetti(opts) {
+        opts = opts || {};
+        if (reducedMotion && opts.intensity && opts.intensity < 0.5) return;
+        if (reducedMotion) opts = { intensity: 0.85, durationMs: 2600 };
+        var intensity = opts.intensity != null ? opts.intensity : 1;
+        var durationMs = opts.durationMs != null ? opts.durationMs : 3200;
+
+        var canvas = document.getElementById("confetti");
+        var ctx = canvas.getContext("2d");
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(innerWidth * dpr);
+        canvas.height = Math.floor(innerHeight * dpr);
+        canvas.style.width = innerWidth + "px";
+        canvas.style.height = innerHeight + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        var rect = zone.getBoundingClientRect();
+        var ox = rect.left + rect.width / 2;
+        var oy = rect.top + rect.height / 2;
+
+        var pieces = [];
+        var colors = ["#ffd700", "#ff6b9d", "#87ceeb", "#c9f364", "#fff8e7", "#e84d6f", "#dda0dd"];
+        var count = Math.floor(Math.min(160, innerWidth / 5) * intensity);
+        for (var i = 0; i < count; i++) {
+          pieces.push({
+            x: ox + (Math.random() - 0.5) * rect.width * 0.5,
+            y: oy + (Math.random() - 0.5) * rect.height * 0.45,
+            vx: (Math.random() - 0.5) * (14 + 10 * intensity),
+            vy: Math.random() * -(14 + 10 * intensity) - 3,
+            rot: Math.random() * Math.PI * 2,
+            vr: (Math.random() - 0.5) * (0.35 + 0.2 * intensity),
+            g: 0.32 + Math.random() * 0.18,
+            size: (5 + Math.random() * 10) * (0.65 + 0.35 * intensity),
+            color: colors[i % colors.length],
+            shape: Math.random() > 0.45 ? "rect" : "circle",
+          });
+        }
+
+        var start = performance.now();
+        function frame(now) {
+          var elapsed = now - start;
+          ctx.clearRect(0, 0, innerWidth, innerHeight);
+          for (var j = 0; j < pieces.length; j++) {
+            var p = pieces[j];
+            p.vy += p.g;
+            p.x += p.vx;
+            p.y += p.vy;
+            p.rot += p.vr;
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rot);
+            ctx.fillStyle = p.color;
+            if (p.shape === "circle") {
+              ctx.beginPath();
+              ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+              ctx.fill();
+            } else {
+              ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.65);
+            }
+            ctx.restore();
+          }
+          if (elapsed < durationMs) requestAnimationFrame(frame);
+          else ctx.clearRect(0, 0, innerWidth, innerHeight);
+        }
+        requestAnimationFrame(frame);
+      }
+
+      function syncHint(idle) {
+        var p = Math.floor(progress);
+        var text = DEFAULT_HINT;
+        if (idle > 400 && progress > 18 && progress < 94)
+          text = "It’s sealing back up — tap faster!! Don’t lose it.";
+        else if (comboStreak >= 16)
+          text = "Machinery couldn’t keep up with you — keep going!";
+        else if (p >= 88) text = "One good burst — smash through!";
+        else if (p >= 58) text = "She’s cracking wide open — stay relentless!";
+        else if (p >= 28) text = "Nice rhythm — tighter taps = harder hits.";
+        if (text !== lastHintText) {
+          hintEl.textContent = text;
+          lastHintText = text;
+        }
+      }
+
+      function syncMeterLabels(idle) {
+        fillEl.style.width = Math.min(100, progress) + "%";
+        var frenzy =
+          comboStreak >= 14
+            ? ' · <span style="color:#ffd98a;font-weight:600;">frenzy ×' +
+              comboStreak +
+              "</span>"
+            : " · chain fast taps";
+        stepEl.innerHTML =
+          "<strong>" +
+          Math.floor(progress) +
+          "%</strong> smashed" +
+          frenzy;
+
+        fillEl.classList.toggle("is-danger", progress < prevProgress - 0.08 && idle > DECAY_DELAY_MS);
+        fillEl.classList.toggle("is-hot", comboStreak >= 14 || progress >= 88);
+
+        syncHint(idle);
+        zone.dataset.cracks = crackTier();
+
+        syncCrossedFlags();
+        if (!crossed.m30 && progress >= 30) {
+          crossed.m30 = true;
+          burstConfetti({ intensity: 0.32, durationMs: 1300 });
+        }
+        if (!crossed.m58 && progress >= 58) {
+          crossed.m58 = true;
+          burstConfetti({ intensity: 0.48, durationMs: 1700 });
+        }
+        if (!crossed.m88 && progress >= 88) {
+          crossed.m88 = true;
+          burstConfetti({ intensity: 0.62, durationMs: 2100 });
+        }
+
+        prevProgress = progress;
+      }
+
+      function loop(now) {
+        if (revealed) return;
+        var dt = Math.min(0.045, (now - lastLoopTime) / 1000);
+        lastLoopTime = now;
+        var idle = now - lastTapTime;
+
+        if (idle > DECAY_DELAY_MS && progress > 0) {
+          progress -= DECAY_PER_SEC * dt;
+          if (progress < 0) progress = 0;
+        }
+
+        if (idle > COMBO_MS * 1.35) {
+          comboStreak = Math.max(0, comboStreak - Math.ceil(dt * 5));
+        }
+
+        syncMeterLabels(idle);
+        requestAnimationFrame(loop);
+      }
+
+      function registerTap(sourceIsKeyboard) {
+        if (revealed) return;
+        var now = performance.now();
+        var gap = now - lastTapTime;
+        lastTapTime = now;
+
+        var bonus = 0;
+        if (!sourceIsKeyboard && gap > 15 && gap < COMBO_MS) {
+          bonus = COMBO_MAX * (1 - gap / COMBO_MS);
+        }
+
+        if (!sourceIsKeyboard) {
+          if (gap > 8 && gap < COMBO_MS) comboStreak++;
+          else if (gap >= COMBO_MS) comboStreak = 1;
+        } else comboStreak = Math.max(1, Math.floor(comboStreak * 0.7));
+
+        var gain = TAP_BASE + bonus;
+        if (comboStreak >= 12) gain *= 1.14;
+        if (comboStreak >= 22) gain *= 1.08;
+
+        progress = Math.min(100, progress + gain);
+
+        tapPopKick();
+        buzz();
+
+        if (progress >= 100) {
+          revealGift();
+          return;
+        }
+
+        syncMeterLabels(0);
+      }
+
+      function revealGift() {
+        if (revealed) return;
+        revealed = true;
+        gift.classList.remove("tap-pop");
+        gift.classList.add("opened");
+        zone.classList.add("revealed");
+        zone.removeAttribute("data-cracks");
+        buzz("big");
+        burstConfetti({ intensity: 1.15, durationMs: 3800 });
+      }
+
+      zone.addEventListener(
+        "pointerdown",
+        function (e) {
+          if (revealed) return;
+          if (e.pointerType === "mouse" && e.button !== 0) return;
+          registerTap(false);
+        },
+        { passive: true }
+      );
+
+      zone.addEventListener("keydown", function (e) {
+        if (revealed) return;
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        registerTap(true);
+      });
+
+      requestAnimationFrame(loop);
+    })();
+  </script>
+</body>
+</html>
